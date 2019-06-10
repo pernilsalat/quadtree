@@ -50,21 +50,21 @@ function Circle(x, y, r) {
       // check if the point is in the circle by checking if the euclidean distance of
       // the point and the center of the circle if smaller or equal to the radius of
       // the circle
-      let d = Math.pow((point.x - x), 2) + Math.pow((point.y - y), 2);
+      const d = Math.pow((point.x - x), 2) + Math.pow((point.y - y), 2);
       return d <= rSquared;
     },
     intersects(range) {
 
-      var xDist = Math.abs(range.x - x);
-      var yDist = Math.abs(range.y - y);
+      const xDist = Math.abs(range.x - x);
+      const yDist = Math.abs(range.y - y);
 
       // radius of the circle
-      var r = r;
+      const r = r;
 
-      var w = range.w;
-      var h = range.h;
+      const w = range.w;
+      const h = range.h;
 
-      var edges = Math.pow((xDist - w), 2) + Math.pow((yDist - h), 2);
+      const edges = Math.pow((xDist - w), 2) + Math.pow((yDist - h), 2);
 
       // no intersection
       if (xDist > (r + w) || yDist > (r + h))
