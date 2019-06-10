@@ -19,10 +19,11 @@ function draw() {
 
   stroke(0, 255, 0);
   rectMode(CENTER);
-  let range = Rectangle(mouseX, mouseY, 50, 50);
+  let range = Circle(mouseX, mouseY, 50, 50);
 
   if (mouseX < width && mouseY < height) {
-    rect(range.x, range.y, range.w * 2, range.h * 2);
+    // rect(range.x, range.y, range.w * 2, range.h * 2);
+    ellipse(range.x, range.y, range.r * 2, range.r * 2);
     let points = qtree.query(range);
     points.forEach(p => {
       strokeWeight(4);

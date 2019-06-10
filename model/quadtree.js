@@ -1,7 +1,8 @@
-function Point(x, y) {
+function Point(x, y, userData) {
   return {
     get x() { return x;},
     get y() { return y;},
+    get userData() { return userData;},
   };
 }
 
@@ -33,6 +34,49 @@ function Rectangle(x, y, w, h) {
       }
       return false;
     },
+  };
+}
+
+// circle class for a circle shaped query
+function Circle(x, y, r) {
+  const rSquared = r * r;
+
+  return {
+    get x() { return x;},
+    get y() { return y;},
+    get r() { return r;},
+    get rSquared() { return rSquared;},
+    contains(point) {
+      // check if the point is in the circle by checking if the euclidean distance of
+      // the point and the center of the circle if smaller or equal to the radius of
+      // the circle
+      let d = Math.pow((point.x - x), 2) + Math.pow((point.y - y), 2);
+      return d <= rSquared;
+    },
+    intersects(range) {
+
+      var xDist = Math.abs(range.x - x);
+      var yDist = Math.abs(range.y - y);
+
+      // radius of the circle
+      var r = r;
+
+      var w = range.w;
+      var h = range.h;
+
+      var edges = Math.pow((xDist - w), 2) + Math.pow((yDist - h), 2);
+
+      // no intersection
+      if (xDist > (r + w) || yDist > (r + h))
+        return false;
+
+      // intersection within the circle
+      if (xDist <= w || yDist <= h)
+        return true;
+
+      // intersection on the edge of the circle
+      return edges <= rSquared;
+    }
   };
 }
 
@@ -94,7 +138,7 @@ function QuadTree(capacity, boundary = Rectangle(width / 2, height / 2, width / 
         case 'contains':
           found = this.getAllPoints();
           break;
-        case 'intersects': {
+        case 'intersects' || true: {
           if (northeast) {
             found = northeast.query(range)
               .concat(northwest.query(range))
